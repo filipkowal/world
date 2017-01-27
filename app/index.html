@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app="world">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <!--CSS-->
+    <link rel="stylesheet", href="world.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <!--JS-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="world.js"></script>
+    <script src="countries.js"></script>
+  </head>
+  <body ng-controller="WorldCtrl">
+
+  <!--GDY KLIKASZ NA KONTYNENT ZNIKAJĄ KRAJE INNYCH KONTYNENTÓW!!!!-->
+  <!--GDY ZAZNACZYSZ KONTYNENT I ODZNACZYSZ KTORYS KRAJ ZAZNACZAJA SIE INNE KONTYNENTY!!!-->
+  <div class="container" ng-app="world" ng-controller="WorldCtrl">
+    <br/>
+    <table class="table">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search Country" ng-model="searchCountry">
+                </div>
+            </div>
+        </form>
+        <tr ng-repeat="continent in continents">
+             <!--CONTINENT-->
+            <td class="checked-{{continent.checked}}">
+                <h3><input type="checkbox" ng-model="continent.checked" ng-click="checkCountries(continent)">
+                    {{continent.name}}</h3>
+            <!--<ul>-->
+                 <!--COUNTRY-->
+            <table class="table">
+                <thead>
+                  <tr>
+                    <td>
+                      <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                        Country Name
+                        <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                      </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'capital'; sortReverse = !sortReverse">
+                        Capital City
+                            <span ng-show="sortType == 'capital' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'capital' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                  </tr>
+                </thead>
+                <tr ng-repeat="country in countries | filter: {continent:continent.shortName}
+                | orderBy:sortType:sortReverse | filter:searchCountry">
+                    <td>
+                    <input type="checkbox" ng-model="country.checked" ng-click="checkContinent()">
+                    <span class="checked-{{country.checked}}"> {{country.name}}</span>
+                    </td>
+                    <td>{{country.capital}}</td>
+                </tr>
+            </table>
+            </td>
+                <!--</ul>-->
+        </tr>
+    </table>
+  </div>
+
+  </body>
+</html>
