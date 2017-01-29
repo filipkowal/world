@@ -1519,18 +1519,8 @@ world.controller('WorldCtrl', function WorldCtrl($scope){
                 return country.continent===continent.shortName;
             }
         );
-        if(continent.checked){
-            // Check countriesOfContinent
-            for(var i=0; i<countriesOfContinent.length; i+=1){
-                countriesOfContinent[i].checked = true;
-            }
-            $scope.countries = countriesOfContinent;
-        } else {
-            for(var i=0; i<countriesOfContinent.length; i+=1){
-                countriesOfContinent[i].checked = false;
-            }
-            $scope.countries = countriesOfContinent;
-        }
+        // Check countriesOfContinent if continent is checked
+        countriesOfContinent.forEach(function(country) {country.checked = continent.checked;});
     };
     $scope.checkContinent = function() {
         //Returns true if all the countries of continent are checked
@@ -1542,16 +1532,13 @@ world.controller('WorldCtrl', function WorldCtrl($scope){
             var checkedCountries = countriesOfContinent.filter(function(country){
                 return country.checked;
             });
-            if(checkedCountries.length===countriesOfContinent.length){
-                return true
-            } else return false
+            // ALL COUNTRIES OF CONTINENT CHECKED
+            return checkedCountries.length===countriesOfContinent.length;
         }
 
         //for continent in continents
         $scope.continents.forEach(function(continent) {
-            if(allCountriesChecked(continent)){
-                continent.checked = true;
-            } else continent.checked = false;
+            continent.checked = allCountriesChecked(continent);
         })
     }
 });
