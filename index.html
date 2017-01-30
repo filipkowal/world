@@ -52,7 +52,7 @@
                     </td>
                   </tr>
                 </thead>
-                <tr ng-repeat="country in countries | filter: {continent:continent.shortName}
+                <tr ng-repeat="country in countries | filter: {continent:continent.name}
                 | orderBy:sortType:sortReverse | filter:searchCountry">
                     <td>
                     <input type="checkbox" ng-model="country.checked" ng-click="checkContinent()">
